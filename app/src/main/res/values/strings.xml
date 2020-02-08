@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Secret Room</string>
+    <string name="join_room">JOIN ROOM</string>
+    <string name="create_room">CREATE ROOM</string>
+    <string name="secret_room">SECRET ROOM</string>
+    <string name="secret_room_s">Secret Room\'s</string>
+    <string name="welcome_to_group">Welcome to GROUP</string>
+    <string name="enter_message_here">Enter Message here ...</string>
+    <string name="send">Send</string>
+    <string name="gossip_rooms">Gossip Rooms</string>
+</resources>

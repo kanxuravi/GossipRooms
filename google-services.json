@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "152083433920",
+    "firebase_url": "https://gossiprooms.firebaseio.com",
+    "project_id": "gossiprooms",
+    "storage_bucket": "gossiprooms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152083433920:android:618de88250c1b5513ba025",
+        "android_client_info": {
+          "package_name": "com.example.gossiprooms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152083433920-s4h2sild74e4om7re41qvcnkcdobn6bq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gossiprooms",
+            "certificate_hash": "d7c66cc8c89a3ff289d7c63571608480f4ec113d"
+          }
+        },
+        {
+          "client_id": "152083433920-pagovd4amkhcjdbdrj6mdvelsc71rhqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVQvwsROXBqYFVduc-Qb-VOvrSISedwvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152083433920-pagovd4amkhcjdbdrj6mdvelsc71rhqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

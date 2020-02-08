@@ -1,0 +1,105 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/join_view"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#878787"
+            android:fontFamily="cursive"
+            android:padding="10sp"
+            android:text="Gossip Room's"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/enterGrpName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:layout_marginEnd="8dp"
+        android:ems="12"
+        android:inputType="textPersonName"
+        android:hint="Group Name"
+        android:singleLine="true"
+        android:background="@drawable/buttonborderjoin"
+        android:padding="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <EditText
+        android:id="@+id/enterPassKey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="12"
+        android:hint="Passkey"
+        android:singleLine="true"
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:padding="20sp"
+        android:background="@drawable/buttonborderjoin"
+        app:layout_constraintEnd_toEndOf="@+id/enterGrpName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/enterGrpName"
+        app:layout_constraintTop_toBottomOf="@+id/enterGrpName" />
+
+    <EditText
+        android:id="@+id/enterUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/buttonborderjoin"
+        android:ems="12"
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:hint="Username"
+        android:singleLine="true"
+        android:padding="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/enterPassKey"
+        app:layout_constraintStart_toStartOf="@+id/enterPassKey"
+        app:layout_constraintTop_toBottomOf="@+id/enterPassKey" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    <Button
+        android:id="@+id/joinbtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="40dp"
+        android:background="@drawable/buttonbordercreate"
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:onClick="join"
+        android:padding="15dp"
+        android:textSize="18sp"
+        android:text="JOIN ROOM"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/enterUserName"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/enterUserName" /></LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
