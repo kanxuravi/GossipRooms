@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +73,7 @@ public class room extends AppCompatActivity {
         }
 
         @SuppressLint("CutPasteId") TextView welcomeName = findViewById(R.id.group_name);
-        welcomeName.setText("Welcome to " + groupname);
+        welcomeName.setText("Gossip Room : " + groupname);
 
       updateView();
 
@@ -92,6 +95,7 @@ public class room extends AppCompatActivity {
         final ScrollView scrollLayout = findViewById(R.id.scrollView2);
 
 
+
         ChildEventListener eventListener = new ChildEventListener() {
 
             @Override
@@ -100,16 +104,11 @@ public class room extends AppCompatActivity {
                     String Message = ds.getValue(String.class);
                     final TextView tv = new TextView(room.this);
                     tv.setTextSize(20);
+                    tv.setTypeface(ResourcesCompat.getFont(getApplicationContext(),R.font.anonymous_pro_bold));
                     tv.setPadding(20,20,20,20);
                     tv.setText(Message);
-                    if (lightModeON)
-                    {
-                        tv.setTextColor(getResources().getColor(R.color.black));
-                    }
-                    else
-                    {
-                        tv.setTextColor(getResources().getColor(R.color.white));
-                    }
+                    tv.setTextColor(getResources().getColor(R.color.colorLightGreen));
+
                     msgList.addView(tv);
                     scrollLayout.postDelayed(new Runnable() {
                         @Override
@@ -154,6 +153,8 @@ public class room extends AppCompatActivity {
             assert connMgr != null;
             final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            final InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            assert imm != null;
             if (Objects.requireNonNull(wifi).isConnectedOrConnecting() || Objects.requireNonNull(mobile).isConnectedOrConnecting())
             {
 
@@ -167,17 +168,21 @@ public class room extends AppCompatActivity {
                             msg = msgProvider.getText().toString();
                             if(!msg.equals(""))
                             {
-                                Map<String, String> messages = new HashMap<>();
-                                messages.put("message", username +" : "+msg);
-                                msgRef.push().setValue(messages);
                                 msgProvider.setText("");
                                 InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                                assert inputMethodManager != null;
                                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                Map<String, String> messages = new HashMap<>();
+                                messages.put("message", username +" > "+msg);
+                                msgRef.push().setValue(messages);
                             }
                             else
                             {
-                                Toast nomsg = Toast.makeText(getApplicationContext(),"No Message to send",Toast.LENGTH_SHORT);
+                                Toast nomsg = Toast.makeText(getApplicationContext(),"No Message to send, Please Write something",Toast.LENGTH_SHORT);
                                 nomsg.show();
+                                msgProvider.requestFocus();
+                                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+
                             }
 
                         }
@@ -214,7 +219,7 @@ public class room extends AppCompatActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setMessage("Are you sure to Exit Group").setPositiveButton("Yes", dialogClickListener)
+        builder.setMessage("Are you sure to Exit Room ?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
 
 

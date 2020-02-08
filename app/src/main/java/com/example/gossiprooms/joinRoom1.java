@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -72,27 +74,35 @@ public class joinRoom1 extends AppCompatActivity {
         EditText GroupName = findViewById(R.id.enterGrpName);
         EditText GroupPass = findViewById(R.id.enterPassKey);
         EditText username = findViewById(R.id.enterUserName);
-        grpName = GroupName.getText().toString();
-        grpPass = GroupPass.getText().toString();
-        user = username.getText().toString();
+        grpName = GroupName.getText().toString().trim();
+        grpPass = GroupPass.getText().toString().trim();
+        user = username.getText().toString().trim();
 
         final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connMgr != null;
         final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        assert imm != null;
 
 
-        if (grpName.matches("")) {
-            Toast.makeText(this, "You did not enter a Group Name", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(grpName)) {
+            GroupName.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast.makeText(this, "You must enter a room name to join room", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (grpPass.matches("")) {
-            Toast.makeText(this, "You did not enter a Group Pass Key", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(grpPass)) {
+            GroupPass.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast.makeText(this, "You must enter a group pass to join room", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (user.matches("")) {
-            Toast.makeText(this, "You must enter a Username", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(user)) {
+            username.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast.makeText(this, "You must enter a Username to join room", Toast.LENGTH_SHORT).show();
             return;
         }
         final ProgressDialog progress = new ProgressDialog(this);
@@ -100,7 +110,7 @@ public class joinRoom1 extends AppCompatActivity {
         progress.setCancelable(false);
         Objects.requireNonNull(progress.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         if (Objects.requireNonNull(wifi).isConnectedOrConnecting() || Objects.requireNonNull(mobile).isConnectedOrConnecting()) {
-
+            imm.hideSoftInputFromWindow(username.getWindowToken(), 0);
             progress.show();
 
 

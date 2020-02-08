@@ -3,9 +3,12 @@ package com.example.gossiprooms;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,10 +32,12 @@ public class createRoom1 extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("rooms");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_room1);
+
 
         lightModeON = Objects.requireNonNull(getIntent().getExtras()).getBoolean("lightmode");
         if (lightModeON)
@@ -47,19 +52,19 @@ public class createRoom1 extends AppCompatActivity {
     }
 
     public void create(View view) {
+        EditText group_name = findViewById(R.id.group_name);
+        EditText group_pass = findViewById(R.id.grp_pass);
+        EditText username = findViewById(R.id.user_name);
         final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connMgr != null;
         final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-            EditText group_name = findViewById(R.id.group_name);
-            EditText group_pass = findViewById(R.id.grp_pass);
-            EditText username = findViewById(R.id.user_name);
 
-            grpName = group_name.getText().toString();
-            grpPass = group_pass.getText().toString();
-            user = username.getText().toString();
+            grpName = group_name.getText().toString().trim();
+            grpPass = group_pass.getText().toString().trim();
+            user = username.getText().toString().trim();
             validate();
 
 
@@ -68,6 +73,7 @@ public class createRoom1 extends AppCompatActivity {
                 final ProgressDialog progress = new ProgressDialog(this);
                 progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.setCancelable(false);
+                Objects.requireNonNull(progress.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 if (Objects.requireNonNull(wifi).isConnectedOrConnecting() || Objects.requireNonNull(mobile).isConnectedOrConnecting()) {
                 progress.show();
                 myRef.orderByChild("Group_Name").equalTo(grpName)
@@ -76,7 +82,7 @@ public class createRoom1 extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     progress.dismiss();
-                                    Toast exists = Toast.makeText(getApplicationContext(), "Group Name already exists", Toast.LENGTH_SHORT);
+                                    Toast exists = Toast.makeText(getApplicationContext(), "Group Name already exists, Please choose another name", Toast.LENGTH_SHORT);
                                     exists.show();
                                 } else {
                                     Map<String, String> groupDetails = new HashMap<>();
@@ -112,28 +118,40 @@ public class createRoom1 extends AppCompatActivity {
     }
 
     private void validate() {
-        if (grpName == null || grpName.length() <= 3){
-            Toast groupNameError = Toast.makeText(getApplicationContext(),"Group Name must be of 4 characters",Toast.LENGTH_SHORT);
+        EditText group_name = findViewById(R.id.group_name);
+        EditText group_pass = findViewById(R.id.grp_pass);
+        EditText username = findViewById(R.id.user_name);
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        assert imm != null;
+        if (TextUtils.isEmpty(grpName) ||grpName.length() <= 3){
+            group_name.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast groupNameError = Toast.makeText(getApplicationContext(),"Please enter a room name with at least 4 characters.",Toast.LENGTH_SHORT);
             groupNameError.show();
             validation = false;
         }
 
-        else if (grpPass == null || grpPass.length() <= 7)
+        else if (TextUtils.isEmpty(grpPass)|| grpPass.length() <= 7)
         {
-            Toast groupNameError = Toast.makeText(getApplicationContext(),"Group Pass Key must be of 8 characters",Toast.LENGTH_SHORT);
+            group_pass.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast groupNameError = Toast.makeText(getApplicationContext(),"Please enter a room passkey with at least 8 characters.",Toast.LENGTH_SHORT);
             groupNameError.show();
             validation = false;
         }
 
-        else if (user == null || user.length() <= 0)
+        else if (TextUtils.isEmpty(user) || user.length() <= 0)
         {
-            Toast userNameError = Toast.makeText(getApplicationContext(),"Must Enter a Username to Enter a Group",Toast.LENGTH_SHORT);
+            username.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+            Toast userNameError = Toast.makeText(getApplicationContext(),"Must enter a username to enter a room",Toast.LENGTH_SHORT);
             userNameError.show();
             validation = false;
         }
 
         else {
             validation =true;
+            imm.hideSoftInputFromWindow(username.getWindowToken(), 0);
         }
     }
 

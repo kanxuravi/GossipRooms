@@ -1,4 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/join_view"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#307818"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,42 +17,59 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="#878787"
-            android:fontFamily="cursive"
-            android:padding="10sp"
-            android:text="Gossip Room's"
-            android:textSize="30sp"
+            android:fontFamily="@font/open_sans_condensed_bold"
+            android:padding="8sp"
+            android:text="Gossip Room"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/enterGrpName"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/open_sans_condensed_bold"
         android:layout_marginEnd="8dp"
-        android:ems="12"
-        android:inputType="textPersonName"
-        android:hint="Group Name"
-        android:singleLine="true"
-        android:background="@drawable/buttonborderjoin"
-        android:padding="20sp"
+        android:layout_marginBottom="8dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+    <EditText
+        android:id="@+id/enterGrpName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:layout_marginRight="40dp"
+        android:padding="20sp"
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:ems="12"
+        android:inputType="textPersonName"
+        android:hint="Room Name"
+        android:singleLine="true"
+        android:background="@drawable/buttonborderjoin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/enterPassKey"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:layout_marginRight="40dp"
         android:ems="12"
-        android:hint="Passkey"
+        android:hint="Room Passkey"
         android:singleLine="true"
         android:fontFamily="@font/open_sans_condensed_bold"
         android:padding="20sp"
@@ -63,42 +81,50 @@
 
     <EditText
         android:id="@+id/enterUserName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:maxLines="1"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/buttonborderjoin"
         android:ems="12"
         android:fontFamily="@font/open_sans_condensed_bold"
-        android:hint="Username"
+        android:hint="Set Your Username"
         android:singleLine="true"
         android:padding="20sp"
         app:layout_constraintEnd_toEndOf="@+id/enterPassKey"
         app:layout_constraintStart_toStartOf="@+id/enterPassKey"
         app:layout_constraintTop_toBottomOf="@+id/enterPassKey" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
     <Button
         android:id="@+id/joinbtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="40dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_weight="0.5"
         android:background="@drawable/buttonbordercreate"
         android:fontFamily="@font/open_sans_condensed_bold"
         android:onClick="join"
         android:padding="15dp"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:text="JOIN ROOM"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/enterUserName"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/enterUserName" /></LinearLayout>
+        />
+
+    </LinearLayout>
 
 
 

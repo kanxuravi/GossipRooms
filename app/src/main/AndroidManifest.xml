@@ -25,6 +25,10 @@
         <activity android:name="com.example.gossiprooms.joinRoom1" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateVisible"/>
         <activity android:name="com.example.gossiprooms.createRoom1" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateVisible"/>
         <activity android:name="com.example.gossiprooms.room" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateVisible"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

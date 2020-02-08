@@ -11,11 +11,10 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#878787"
+        android:background="#307818"
         android:elevation="1000dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,10 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="cursive"
-            android:padding="10sp"
+            android:fontFamily="@font/open_sans_condensed_bold"
+            android:padding="8dp"
             android:text="@string/gossip_rooms"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
@@ -36,8 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:layout_weight="0.2"
+            android:elevation="10000dp"
             android:background="@android:color/transparent"
-            android:drawableStart="@android:drawable/ic_menu_delete"
+            android:drawableEnd="@android:drawable/ic_menu_delete"
             android:gravity="center"
             android:onClick="delete_chat" />
 
@@ -49,11 +49,12 @@
         <Button
             android:id="@+id/exitbutton"
             android:layout_width="0dp"
+            android:elevation="10000dp"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="0.15"
             android:background="@android:color/transparent"
-            android:drawableStart="@android:drawable/ic_lock_power_off"
+            android:drawableEnd="@android:drawable/ic_lock_power_off"
             android:gravity="center"
             android:onClick="exit_chat" />
 
