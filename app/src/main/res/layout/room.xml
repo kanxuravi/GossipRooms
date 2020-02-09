@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/mainRoom"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -28,6 +28,27 @@
             android:text="@string/gossip_rooms"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+
+
+
+        <Button
+
+            android:id="@+id/showUsers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="0.2"
+            android:elevation="10000dp"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:gravity="center"
+            android:onClick="showUserList" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.025" />
 
         <Button
             android:id="@+id/deletebutton"

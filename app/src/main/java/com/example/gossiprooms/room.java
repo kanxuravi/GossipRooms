@@ -5,13 +5,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.firebase.database.ChildEventListener;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +45,7 @@ public class room extends AppCompatActivity {
     String username, msg;
     String groupname;
     LinearLayout msgList;
+    ArrayList<String> userlist = new ArrayList<>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
@@ -76,6 +82,7 @@ public class room extends AppCompatActivity {
         welcomeName.setText("Gossip Room : " + groupname);
 
       updateView();
+      updateUserList();
 
         scrollLayout.postDelayed(new Runnable() {
             @Override
@@ -86,6 +93,46 @@ public class room extends AppCompatActivity {
         },1000);
 
 
+    }
+
+    private void updateUserList() {
+        DatabaseReference myRef = database.getReference("currentusers");
+        DatabaseReference viewRef = myRef.child(groupname);
+        ChildEventListener eventListener = new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String users = ds.getValue(String.class);
+                    userlist.add(users);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String users = ds.getValue(String.class);
+                    userlist.remove(users);
+                }
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        };
+        viewRef.addChildEventListener(eventListener);
     }
 
     private void updateView() {
@@ -209,6 +256,7 @@ public class room extends AppCompatActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent intent = new Intent(room.this,MainActivity.class);
+                        removeUserFromList();
                         startActivity(intent);
                         finish();
 
@@ -219,11 +267,35 @@ public class room extends AppCompatActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setMessage("Are you sure to Exit Room ?").setPositiveButton("Yes", dialogClickListener)
+        builder.setMessage("Are you sure to Exit Room?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
 
 
     }
+
+    public void removeUserFromList() {
+        DatabaseReference myRef = database.getReference("currentusers").child(groupname);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.child("user").getValue().toString().equals(username))
+                    {
+                        dataSnapshot1.getRef().setValue(null);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        }
 
     @Override
     public void onBackPressed() {
@@ -251,6 +323,33 @@ public class room extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setMessage("Are you sure to delete all messages?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
+
+    }
+
+    public void showUserList(View view) {
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popuplist, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        ListView popupText = popupView.findViewById(R.id.roomMemberList);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this,
+                        android.R.layout.simple_list_item_1, userlist);
+        popupText.setAdapter(adapter);
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+
 
     }
 }

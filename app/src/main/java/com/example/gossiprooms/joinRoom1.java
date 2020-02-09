@@ -22,12 +22,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class joinRoom1 extends AppCompatActivity {
 
     boolean lightModeON , validation;
-    String grpName, grpPass, roomkey;
+    String grpName, grpPass;
     String groupname, grouppass, user;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("rooms");
@@ -133,6 +135,7 @@ public class joinRoom1 extends AppCompatActivity {
                                     intent.putExtra("lightmode", lightModeON);
                                     intent.putExtra("groupname", groupname);
                                     intent.putExtra("username", user);
+                                    addUserInList();
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -163,6 +166,35 @@ public class joinRoom1 extends AppCompatActivity {
             network_error.show();
         }
     }
+
+    private void addUserInList() {
+        final DatabaseReference myRef = database.getReference("currentusers");
+        myRef.orderByChild("Group_Name").equalTo(groupname)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.exists())
+                        {
+                            DatabaseReference userRef = myRef.child(groupname);
+                            Map<String, String> unames = new HashMap<>();
+                            unames.put("user", user);
+                            userRef.push().setValue(unames);
+                        }
+                        else
+                        {
+                            Toast exists = Toast.makeText(getApplicationContext(), "Same username have already joined. Please choose another name.", Toast.LENGTH_SHORT);
+                            exists.show();
+                        }
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
 }
 
 
