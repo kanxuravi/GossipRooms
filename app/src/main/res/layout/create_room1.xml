@@ -107,27 +107,5 @@
             app:layout_constraintStart_toStartOf="@+id/group_name"
             app:layout_constraintTop_toBottomOf="@+id/group_name" />
 
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            android:maxLines="1"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/buttonborderjoin"
-            android:ems="12"
-            android:fontFamily="@font/open_sans_condensed_bold"
-            android:hint="Set Your Username"
-            android:padding="20sp"
-            android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/grp_pass"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/grp_pass"
-            app:layout_constraintTop_toBottomOf="@+id/grp_pass"
-            app:layout_constraintVertical_bias="0.0" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

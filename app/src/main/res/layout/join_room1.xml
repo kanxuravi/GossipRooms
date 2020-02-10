@@ -79,24 +79,6 @@
         app:layout_constraintStart_toStartOf="@+id/enterGrpName"
         app:layout_constraintTop_toBottomOf="@+id/enterGrpName" />
 
-    <EditText
-        android:id="@+id/enterUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
-        android:maxLines="1"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/buttonborderjoin"
-        android:ems="12"
-        android:fontFamily="@font/open_sans_condensed_bold"
-        android:hint="Set Your Username"
-        android:singleLine="true"
-        android:padding="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/enterPassKey"
-        app:layout_constraintStart_toStartOf="@+id/enterPassKey"
-        app:layout_constraintTop_toBottomOf="@+id/enterPassKey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

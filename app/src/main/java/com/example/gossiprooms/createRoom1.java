@@ -54,7 +54,6 @@ public class createRoom1 extends AppCompatActivity {
     public void create(View view) {
         EditText group_name = findViewById(R.id.group_name);
         EditText group_pass = findViewById(R.id.grp_pass);
-        EditText username = findViewById(R.id.user_name);
         final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connMgr != null;
@@ -64,7 +63,7 @@ public class createRoom1 extends AppCompatActivity {
 
             grpName = group_name.getText().toString().trim();
             grpPass = group_pass.getText().toString().trim();
-            user = username.getText().toString().trim();
+            user = Objects.requireNonNull(getIntent().getExtras()).getString("username");
             validate();
 
 
@@ -120,7 +119,6 @@ public class createRoom1 extends AppCompatActivity {
     private void validate() {
         EditText group_name = findViewById(R.id.group_name);
         EditText group_pass = findViewById(R.id.grp_pass);
-        EditText username = findViewById(R.id.user_name);
         InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         assert imm != null;
         if (TextUtils.isEmpty(grpName) ||grpName.length() <= 3){
@@ -140,18 +138,9 @@ public class createRoom1 extends AppCompatActivity {
             validation = false;
         }
 
-        else if (TextUtils.isEmpty(user) || user.length() <= 0)
-        {
-            username.requestFocus();
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
-            Toast userNameError = Toast.makeText(getApplicationContext(),"Must enter a username to enter a room",Toast.LENGTH_SHORT);
-            userNameError.show();
-            validation = false;
-        }
-
         else {
             validation =true;
-            imm.hideSoftInputFromWindow(username.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(group_pass.getWindowToken(), 0);
         }
     }
 

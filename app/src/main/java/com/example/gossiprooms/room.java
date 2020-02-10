@@ -394,4 +394,8 @@ public class room extends AppCompatActivity {
                     }
                 });
     }
+
+    public void inviteUser(View view) {
+
+    }
 }

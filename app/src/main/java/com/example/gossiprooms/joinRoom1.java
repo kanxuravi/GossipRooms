@@ -73,10 +73,9 @@ public class joinRoom1 extends AppCompatActivity {
     private void validateIfExists() {
         EditText GroupName = findViewById(R.id.enterGrpName);
         EditText GroupPass = findViewById(R.id.enterPassKey);
-        EditText username = findViewById(R.id.enterUserName);
         grpName = GroupName.getText().toString().trim();
         grpPass = GroupPass.getText().toString().trim();
-        user = username.getText().toString().trim();
+        user = getIntent().getExtras().getString("username");
 
         final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -99,18 +98,13 @@ public class joinRoom1 extends AppCompatActivity {
             Toast.makeText(this, "You must enter a group pass to join room", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(user)) {
-            username.requestFocus();
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
-            Toast.makeText(this, "You must enter a Username to join room", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
         Objects.requireNonNull(progress.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         if (Objects.requireNonNull(wifi).isConnectedOrConnecting() || Objects.requireNonNull(mobile).isConnectedOrConnecting()) {
-            imm.hideSoftInputFromWindow(username.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(GroupPass.getWindowToken(), 0);
             progress.show();
 
 

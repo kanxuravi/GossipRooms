@@ -41,7 +41,7 @@
             android:layout_weight="0.2"
             android:elevation="10000dp"
             android:background="@android:color/transparent"
-            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:drawableEnd="@android:drawable/sym_action_chat"
             android:gravity="center"
             android:onClick="showUserList" />
 
@@ -99,26 +99,26 @@
             android:id="@+id/inputMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/black"
             android:elevation="1000dp"
             android:ems="12"
+            android:layout_weight="1"
             android:focusedByDefault="false"
             android:fontFamily="@font/open_sans_condensed_bold"
             android:hint="@string/enter_message_here"
             android:inputType="textPersonName"
-            android:padding="15sp"
+            android:padding="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_goneMarginBottom="10dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/buttonborderjoin"
