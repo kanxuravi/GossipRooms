@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:padding="10dp"
-        android:text="Gossip Room"
+        android:text="@string/gossip_room"
         android:textAlignment="center"
         android:textColor="#307818"
         android:textSize="60sp"

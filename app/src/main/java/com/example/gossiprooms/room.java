@@ -98,6 +98,9 @@ public class room extends AppCompatActivity {
     private void updateUserList() {
         DatabaseReference myRef = database.getReference("currentusers");
         DatabaseReference viewRef = myRef.child(groupname);
+
+        userlist.add("Active Users");
+
         ChildEventListener eventListener = new ChildEventListener() {
 
             @Override
@@ -301,6 +304,18 @@ public class room extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        addUserInList();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        removeUserFromList();
+    }
+
     public void delete_chat(View view) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -340,7 +355,6 @@ public class room extends AppCompatActivity {
                 new ArrayAdapter<>(this,
                         android.R.layout.simple_list_item_1, userlist);
         popupText.setAdapter(adapter);
-
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         popupView.setOnTouchListener(new View.OnTouchListener(){
             @Override
@@ -351,5 +365,33 @@ public class room extends AppCompatActivity {
         });
 
 
+    }
+
+    private void addUserInList() {
+        final DatabaseReference myRef = database.getReference("currentusers");
+        myRef.orderByChild("Group_Name").equalTo(groupname)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.exists())
+                        {
+                            DatabaseReference userRef = myRef.child(groupname);
+                            Map<String, String> unames = new HashMap<>();
+                            unames.put("user", username);
+                            userRef.push().setValue(unames);
+                        }
+                        else
+                        {
+                            Toast exists = Toast.makeText(getApplicationContext(), "Same username have already joined. Please choose another name.", Toast.LENGTH_SHORT);
+                            exists.show();
+                        }
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

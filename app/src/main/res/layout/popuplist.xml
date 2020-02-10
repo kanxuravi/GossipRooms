@@ -1,17 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     android:id="@+id/userlist"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#307818">
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/roomMemberList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:background="#307818"
         android:layout_centerInParent="true"
-        android:layout_margin="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:textSize="20sp"/>
 
 </RelativeLayout>
